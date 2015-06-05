@@ -9,8 +9,6 @@ if [[  $TERM_PROGRAM == Apple_Terminal ]]; then
 EOF
     return 0
     
-    
-
 elif [[ $TERM_PROGRAM == iTerm.app ]];then
 
     #If we are running iTerm.app, open a new TAB in the
@@ -42,6 +40,9 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
             launch session "Default Session"
             tell the last session
                 write text "cd venua"
+                # The Venua server needs to have the associated
+                # process killed if it was not shut down properly.
+                write text "kill -quit $(cat ~/git/venua/logs/nginx.pid)"
                 write text "lapis server"
             end tell
 
