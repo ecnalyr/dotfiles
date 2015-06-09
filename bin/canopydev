@@ -20,11 +20,13 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
             activate current session
             
             tell the current session
+                set name to "Canopy Directory"
                 write text "cd ~/git/canopy/"
             end tell
 
             launch session "Default Session"
             tell the last session
+                set name to "Canopy Server"
                 write text "cd canopy"
                 write text "rails s"
             end tell
@@ -32,6 +34,7 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
             activate current session
             launch session "Default Session"
             tell the last session
+                set name to "Stadium Server"
                 write text "cd stadium"
                 write text "rails s -p 4000"
             end tell
@@ -39,6 +42,7 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
             activate current session
             launch session "Default Session"
             tell the last session
+                set name to "Venua Server"
                 write text "cd venua"
                 # The Venua server needs to have the associated
                 # process killed if it was not shut down properly.
@@ -49,6 +53,7 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
             activate current session
             launch session "Default Session"
             tell the last session
+                set name to "Elasticsearch Server"
                 write text "elasticsearch -Des.http.port=9250 start"
             end tell
         end tell
