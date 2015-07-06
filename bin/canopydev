@@ -3,22 +3,22 @@ if [[  $TERM_PROGRAM == Apple_Terminal ]]; then
 
     #If we are running Apple's Terminal.app, open a new window in the
     #specified directory, if given, or else in $PWD.
-    
+
     #Not prepared
     print "Not configured for Terminal, try using iTerm"
 EOF
     return 0
-    
+
 elif [[ $TERM_PROGRAM == iTerm.app ]];then
 
     #If we are running iTerm.app, open a new TAB in the
     #specified directory, if given, or else in $PWD.
-    
+
     osascript <<-eof
        tell application "iTerm"
         tell the last terminal
             activate current session
-            
+
             tell the current session
                 set name to "Canopy Directory"
                 write text "cd ~/git/canopy/"
@@ -37,6 +37,14 @@ elif [[ $TERM_PROGRAM == iTerm.app ]];then
                 set name to "Stadium Server"
                 write text "cd stadium"
                 write text "rails s -p 4000"
+            end tell
+
+            activate current session
+            launch session "Default Session"
+            tell the last session
+                set name to "Access Server"
+                write text "cd access"
+                write text "rails s -p 5000"
             end tell
 
             activate current session
