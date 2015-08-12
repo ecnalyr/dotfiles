@@ -1,0 +1,46 @@
+#!/bin/zsh -f
+if [[  $TERM_PROGRAM == Apple_Terminal ]]; then
+
+    #If we are running Apple's Terminal.app, open a new window in the
+    #specified directory, if given, or else in $PWD.
+
+    #Not prepared
+    print "Not configured for Terminal, try using iTerm"
+EOF
+    return 0
+
+elif [[ $TERM_PROGRAM == iTerm.app ]];then
+
+    #If we are running iTerm.app, open a new TAB in the
+    #specified directory, if given, or else in $PWD.
+
+    osascript <<-eof
+       tell application "iTerm"
+        tell the last terminal
+            activate current session
+
+            tell the current session
+                set name to "IJF Directory"
+                write text "cd ~/git/ijf/"
+            end tell
+
+            launch session "Default Session"
+            tell the last session
+                set name to "IJF Server"
+                write text "cd ijf"
+                write text "rails s"
+            end tell
+        end tell
+       end tell
+eof
+    return 0
+
+else
+
+    # assume we want xterm
+
+    # xterm &
+    print "Not configured for whatever CLI you're using, try using iTerm"
+    return 0
+
+fi
