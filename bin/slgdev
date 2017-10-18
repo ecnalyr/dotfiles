@@ -1,0 +1,74 @@
+#!/bin/zsh -f
+if [[  $TERM_PROGRAM == Apple_Terminal ]]; then
+
+    #If we are running Apple's Terminal.app, open a new window in the
+    #specified directory, if given, or else in $PWD.
+
+    #Not prepared
+    print "Not configured for Terminal, try using iTerm"
+EOF
+    return 0
+
+elif [[ $TERM_PROGRAM == iTerm.app ]];then
+
+    #If we are running iTerm.app, open a new TAB in the
+    #specified directory, if given, or else in $PWD.
+
+    osascript <<-eof
+       tell application "iTerm2"
+         tell current window
+            
+            tell current session
+                set name to "sl-pay Directory"
+                write text "cd ~/git/sl-pay/"
+            end tell
+         
+            create tab with default profile
+            tell current session
+                set name to "sl-pay Server"
+                write text "cd ~/git/sl-pay/"
+                write text "rails s"
+            end tell
+
+            create tab with default profile
+            tell current session
+                set name to "sl-pay Sidekiq"
+                write text "cd ~/git/sl-pay/"
+                write text "sidekiq"
+            end tell
+
+            create tab with default profile
+            tell current session
+                set name to "borrower-ui Server"
+                write text "cd ~/git/borrower-ui/"
+                write text "ember serve"
+            end tell
+
+            create tab with default profile
+            tell current session
+                set name to "customer-ui Server"
+                write text "cd ~/git/customer-ui/"
+                write text "ember serve"
+            end tell
+
+            create tab with default profile
+            tell current session
+                set name to "slg-admin-ui Server"
+                write text "cd ~/git/slg-admin-ui/"
+                write text "npm start --port 3001"
+            end tell
+
+         end tell
+       end tell
+eof
+    return 0
+
+else
+    
+    # assume we want xterm
+
+    # xterm &
+    print "Not configured for whatever CLI you're using, try using iTerm"
+    return 0
+
+fi
